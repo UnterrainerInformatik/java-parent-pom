@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.0.10</version>
+	<version>0.0.11</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 
@@ -122,6 +122,11 @@
 									<ignoredUnusedDeclaredDependency>junit:junit</ignoredUnusedDeclaredDependency>
 									<ignoredUnusedDeclaredDependency>org.assertj:assertj-core</ignoredUnusedDeclaredDependency>
 								</ignoredUnusedDeclaredDependencies>
+								<ignoredUsedUndeclaredDependencies>
+									<ignoredUsedUndeclaredDependency>com.fasterxml.jackson.core:jackson-annotations</ignoredUsedUndeclaredDependency>
+									<ignoredUsedUndeclaredDependency>com.fasterxml.jackson.core:jackson-core</ignoredUsedUndeclaredDependency>
+									<ignoredUsedUndeclaredDependency>com.fasterxml.jackson.core:jackson-databind</ignoredUsedUndeclaredDependency>
+								</ignoredUsedUndeclaredDependencies>
 							</configuration>
 						</execution>
 					</executions>
