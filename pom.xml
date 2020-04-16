@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.0.11</version>
+	<version>0.0.12</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 
@@ -83,7 +83,7 @@
 				<directory>${project.basedir}/src/test/resources</directory>
 			</testResource>
 		</testResources>
-		
+
 		<!-- <pluginManagement> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
 			<artifactId>maven-shade-plugin</artifactId> ... </plugin> </plugins> </pluginManagement> -->
 		<pluginManagement>
@@ -106,6 +106,19 @@
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>3.1.2</version>
 					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/libs</outputDirectory>
+								<overWriteReleases>false</overWriteReleases>
+								<overWriteSnapshots>false</overWriteSnapshots>
+								<overWriteIfNewer>true</overWriteIfNewer>
+							</configuration>
+						</execution>
 						<execution>
 							<id>analyze</id>
 							<goals>
