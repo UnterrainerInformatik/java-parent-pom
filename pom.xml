@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.0.12</version>
+	<version>0.0.13</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 
@@ -144,6 +144,20 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.0.2</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>libs/</classpathPrefix>
+								<mainClass>${mainclass}</mainClass>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -153,6 +167,9 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
