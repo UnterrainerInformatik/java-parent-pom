@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.0.17</version>
+	<version>0.0.18</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 
@@ -161,7 +161,7 @@
 		<repository>
 			<id>gitlab-maven</id>
 			<name>gitlab-maven</name>
-			<url>https://gitlab.lan.elite-zettl.at/api/v4/projects/2/packages/maven</url>
+			<url>https://gitlab.lan.elite-zettl.at/api/v4/projects/4/packages/maven</url>
 		</repository>
 	</repositories>
 
@@ -169,12 +169,12 @@
 		<repository>
 			<id>gitlab-maven</id>
 			<name>gitlab-maven</name>
-			<url>https://gitlab.lan.elite-zettl.at/api/v4/projects/2/packages/maven</url>
+			<url>https://gitlab.lan.elite-zettl.at/api/v4/projects/4/packages/maven</url>
 		</repository>
 		<snapshotRepository>
 			<id>gitlab-maven</id>
 			<name>gitlab-maven</name>
-			<url>https://gitlab.lan.elite-zettl.at/api/v4/projects/2/packages/maven</url>
+			<url>https://gitlab.lan.elite-zettl.at/api/v4/projects/4/packages/maven</url>
 		</snapshotRepository>
 	</distributionManagement>
 
