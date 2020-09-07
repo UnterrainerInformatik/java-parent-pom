@@ -306,22 +306,6 @@
 		<url>http://www.unterrainer.info</url>
 	</organization>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-        	<id>ossrh</id>
-        	<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    	</repository>
-		<site>
-			<id>github-project-site</id>
-			<name>GitHub Project Pages</name>
-			<url>gitsite:https://github.com/UnterrainerInformatik/java-parent-pom</url>
-		</site>
-	</distributionManagement>
-
 	<scm>
 		<connection>scm:git:https://github.com/UnterrainerInformatik/java</connection>
 		<developerConnection>scm:git:https://guFalcon@github.com/UnterrainerInformatik/java</developerConnection>
@@ -345,16 +329,19 @@
 	</repositories>
 
 	<distributionManagement>
-		<repository>
-			<id>gitlab-maven</id>
-			<name>gitlab-maven</name>
-			<url>https://gitlab.elite-zettl.at/api/v4/projects/4/packages/maven</url>
-		</repository>
 		<snapshotRepository>
-			<id>gitlab-maven</id>
-			<name>gitlab-maven</name>
-			<url>https://gitlab.elite-zettl.at/api/v4/projects/4/packages/maven</url>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+        	<id>ossrh</id>
+        	<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    	</repository>
+		<site>
+			<id>github-project-site</id>
+			<name>GitHub Project Pages</name>
+			<url>gitsite:https://github.com/UnterrainerInformatik/java-parent-pom</url>
+		</site>
 	</distributionManagement>
 
 	<profiles>
