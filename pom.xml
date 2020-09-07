@@ -75,9 +75,8 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupid>org.sonatype.plugins</groupid>
-					<artifactid>nexus-staging-maven-plugin</artifactid>
-					<version>1.6.8</version>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
 					<extensions>true</extensions>
 					<configuration>
 						<serverid>ossrh</serverid>
@@ -86,7 +85,7 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					<groupid>org.apache.maven.plugins</groupid>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactid>maven-source-plugin</artifactid>
 					<version>3.0.1</version>
 					<executions>
@@ -113,7 +112,7 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					<groupid>org.apache.maven.plugins</groupid>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactid>maven-javadoc-plugin</artifactid>
 					<version>2.10.4</version>
 					<executions>
@@ -127,7 +126,7 @@
 				</plugin>
 				<!-- To sign the artifacts -->
 				<plugin>
-					<groupid>org.apache.maven.plugins</groupid>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactid>maven-gpg-plugin</artifactid>
 					<version>1.6</version>
 					<executions>
