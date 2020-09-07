@@ -332,7 +332,7 @@
 		<developer>
 			<name>Psilo</name>
 			<email>psilo@unterrainer.info</email>
-			<organizationurl>https://www.unterrainer.info</organizationurl>
+			<organizationUrl>https://www.unterrainer.info</organizationUrl>
 		</developer>
 	</developers>
 
