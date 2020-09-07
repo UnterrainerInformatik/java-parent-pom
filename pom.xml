@@ -75,6 +75,30 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<groupid>org.sonatype.plugins</groupid>
+					<artifactid>nexus-staging-maven-plugin</artifactid>
+					<version>1.6.8</version>
+					<extensions>true</extensions>
+					<configuration>
+						<serverid>ossrh</serverid>
+						<nexusurl>https://oss.sonatype.org/</nexusurl>
+						<autoreleaseafterclose>true</autoreleaseafterclose>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupid>org.apache.maven.plugins</groupid>
+					<artifactid>maven-source-plugin</artifactid>
+					<version>3.0.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.8.0</version>
 					<configuration>
@@ -87,6 +111,34 @@
 							</path>
 						</annotationProcessorPaths>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupid>org.apache.maven.plugins</groupid>
+					<artifactid>maven-javadoc-plugin</artifactid>
+					<version>2.10.4</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- To sign the artifacts -->
+				<plugin>
+					<groupid>org.apache.maven.plugins</groupid>
+					<artifactid>maven-gpg-plugin</artifactid>
+					<version>1.6</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<artifactId>maven-dependency-plugin</artifactId>
@@ -215,6 +267,18 @@
 
 		<plugins>
 			<plugin>
+				<artifactid>maven-gpg-plugin</artifactid>
+			</plugin>
+			<plugin>
+				<artifactid>maven-javadoc-plugin</artifactid>
+			</plugin>
+			<plugin>
+				<artifactid>maven-source-plugin</artifactid>
+			</plugin>
+			<plugin>
+				<artifactid>nexus-staging-maven-plugin</artifactid>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
 			<plugin>
@@ -229,6 +293,49 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<licenses>
+		<license>
+			<name>The Unlicense</name>
+			<url>https://unlicense.org/</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>Unterrainer Informatik OG</name>
+		<url>http://www.unterrainer.info</url>
+	</organization>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+        	<id>ossrh</id>
+        	<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    	</repository>
+		<site>
+			<id>github-project-site</id>
+			<name>GitHub Project Pages</name>
+			<url>gitsite:https://github.com/UnterrainerInformatik/java-parent-pom</url>
+		</site>
+	</distributionManagement>
+
+	<scm>
+		<connection>scm:git:https://github.com/UnterrainerInformatik/java</connection>
+		<developerConnection>scm:git:https://guFalcon@github.com/UnterrainerInformatik/java</developerConnection>
+		<url>https://github.com/UnterrainerInformatik/java</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>Psilo</name>
+			<email>psilo@unterrainer.info</email>
+			<organizationurl>https://www.unterrainer.info</organizationurl>
+		</developer>
+	</developers>
 
 	<repositories>
 		<repository>
@@ -251,4 +358,16 @@
 		</snapshotRepository>
 	</distributionManagement>
 
+	<profiles>
+		<profile>
+			<id>mvnrepository</id>
+			<repositories>
+				<repository>
+					<id>mvnrepository</id>
+					<name>mvnrepository</name>
+					<url>http://www.mvnrepository.com</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 </project>
