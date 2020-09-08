@@ -39,7 +39,7 @@ deploy:
       overwrite: true
       api_key:
           secure: $GITHUB_API_KEY
-      file: $DEPLOY_BUILD.$VERSION.zip
+      file: $ARTIFACT_ID.$POM_VERSION.zip
       on:
         tags: true
         branch: master
