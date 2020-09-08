@@ -8,6 +8,8 @@
 	<version>0.0.22</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
+	<url>https://github.com/UnterrainerInformatik/java-parent-pom</url>
+	<description>The parent-pom for all our java projects.</description>
 
 	<properties>
 		<javaVersion>14</javaVersion>
@@ -301,9 +303,9 @@
 	</organization>
 
 	<scm>
-		<connection>scm:git:https://github.com/UnterrainerInformatik/java</connection>
-		<developerConnection>scm:git:https://guFalcon@github.com/UnterrainerInformatik/java</developerConnection>
-		<url>https://github.com/UnterrainerInformatik/java</url>
+		<connection>scm:git:https://github.com/UnterrainerInformatik</connection>
+		<developerConnection>scm:git:https://guFalcon@github.com/UnterrainerInformatik</developerConnection>
+		<url>https://github.com/UnterrainerInformatik</url>
 	</scm>
 
 	<developers>
@@ -328,14 +330,9 @@
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 		<repository>
-        	<id>ossrh</id>
-        	<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    	</repository>
-		<site>
-			<id>github-project-site</id>
-			<name>GitHub Project Pages</name>
-			<url>gitsite:https://github.com/UnterrainerInformatik/java-parent-pom</url>
-		</site>
+        		<id>ossrh</id>
+        		<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    		</repository>
 	</distributionManagement>
       
 	<profiles>
