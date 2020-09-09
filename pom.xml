@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.0.22</version>
+	<version>0.0.23</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/UnterrainerInformatik/java-parent-pom</url>
@@ -116,7 +116,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.4</version>
+					<version>3.2.0</version>
 					<executions>
 						<execution>
 							<id>attach-javadocs</id>
