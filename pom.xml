@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.1.2</version>
+	<version>0.1.3</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/UnterrainerInformatik/java-parent-pom</url>
@@ -16,6 +16,9 @@
 		<project.compile.sourceEncoding>UTF-8</project.compile.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<repos.id>ossrh</repos.id>
+		<repos.snapshot.url>https://oss.sonatype.org/content/repositories/snapshots</repos.snapshot.url>
+		<repos.deployment.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repos.deployment.url>
 		<name>Parent-POM</name>
 		<package-path>info/unterrainer/commons/parentpom</package-path>
 		<packg-string>info.unterrainer.commons.parentpom</packg-string>
@@ -347,12 +350,12 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<id>${repos.id}</id>
+			<url>${repos.snapshot.url}</url>
 		</snapshotRepository>
 		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>${repos.id}</id>
+			<url>${repos.deployment.url}</url>
 		</repository>
 	</distributionManagement>
 
