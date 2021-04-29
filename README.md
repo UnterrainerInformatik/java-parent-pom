@@ -13,3 +13,4 @@ Reference it as parent in your POM file.
     <version>[current-verison]</version>
 </parent>
 ```
+

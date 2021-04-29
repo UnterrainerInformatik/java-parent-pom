@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.1.10</version>
+	<version>0.1.18</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/UnterrainerInformatik/java-parent-pom</url>
@@ -112,6 +112,7 @@
 						<serverId>ossrh</serverId>
 						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 						<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						<stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
 					</configuration>
 				</plugin>
 				<plugin>
