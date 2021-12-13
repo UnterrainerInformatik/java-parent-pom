@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.1.18</version>
+	<version>0.1.20</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/UnterrainerInformatik/java-parent-pom</url>
@@ -41,59 +41,59 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
-			<version>1.3.0.Final</version>
+			<version>1.5.0.Beta2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>2.0.0-alpha0</version>
+			<version>2.0.0-alpha5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>2.0.0-alpha0</version>
+			<version>2.0.0-alpha5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>2.0.0-alpha1</version>
+			<version>2.0.0-alpha5</version>
 		</dependency>
 		<!-- TEST-SCOPE ################################################# -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.7.0</version>
+			<version>5.8.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.7.0</version>
+			<version>5.8.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-params</artifactId>
-			<version>5.7.0</version>
+			<version>5.8.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.15.0</version>
+			<version>3.21.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>3.5.15</version>
+			<version>4.1.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>3.5.15</version>
+			<version>4.1.0</version>
 			<scope>test</scope>
 		</dependency>
 
