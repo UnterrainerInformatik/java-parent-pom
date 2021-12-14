@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.1.20</version>
+	<version>0.1.21</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/UnterrainerInformatik/java-parent-pom</url>
