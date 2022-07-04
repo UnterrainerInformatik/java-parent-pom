@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.unterrainer.commons</groupId>
 	<artifactId>parent-pom</artifactId>
-	<version>0.2.0</version>
+	<version>0.2.1</version>
 	<name>ParentPom</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/UnterrainerInformatik/java-parent-pom</url>
@@ -36,12 +36,6 @@
 			<artifactId>lombok</artifactId>
 			<version>${lombok-version}</version>
 			<scope>provided</scope>
-		</dependency>
-		<!-- Lombok module workaround -->
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
-			<version>1.5.2.Final</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j -->
 		<dependency>
