@@ -103,8 +103,7 @@ jobs:
       - name: Build and verify with Maven 🔨
         run: mvn --batch-mode --update-snapshots verify $MAVEN_ARGS
       - name: Publish to Maven Central
-        run: mvn verify central-publishing:publish -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
-# run: mvn deploy $MAVEN_ARGS
+        run: mvn verify central-publishing:publish -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} $MAVEN_ARGS
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.SONATYPE_PASSWORD }}
