@@ -75,7 +75,7 @@ jobs:
           server-id: maven
           server-username: ${{ secrets.SONATYPE_USERNAME }}
           server-password: ${{ secrets.SONATYPE_PASSWORD }}
-      - name: Set up GPG for CI⚙️
+      - name: Set up GPG for CI ⚙️
         run: |
           which gpg2 || sudo apt update && sudo apt install -y gnupg2
           mkdir -p ~/.gnupg
@@ -109,6 +109,9 @@ jobs:
               </servers>
             </settings>
           EOF
+      - name: Conditionally setup Maven ⚙️
+        run: |
+          wihch mvn || sudo apt update && sudo apt install -y maven
       - name: Update pom.xml version 💾
         run: |
           mvn versions:set -DnewVersion=${{ needs.bump.outputs.major_version }}.${{ needs.bump.outputs.minor_version }}.${{ needs.bump.outputs.build_version }} -DgenerateBackupPoms=false
