@@ -9,7 +9,7 @@ on:
 jobs:
   bump:
     name: Get And Bump SemVer 👊
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
     outputs:
       pom_version: ${{ steps.set_version.outputs.pom_version }}
       major_version: ${{ steps.set_version.outputs.major_version }}
@@ -49,7 +49,7 @@ jobs:
             echo "build_version=${BUILD_VERSION}" >> $GITHUB_OUTPUT
   build:
     name: Build and publish to Maven Central 🔨
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
     env:
       MAVEN_ARGS: -Dmaven.test.skip=true
     outputs:
@@ -111,8 +111,10 @@ jobs:
       - name: Update pom.xml version 💾
         run: |
           mvn versions:set -DnewVersion=${{ needs.bump.outputs.major_version }}.${{ needs.bump.outputs.minor_version }}.${{ needs.bump.outputs.build_version }} -DgenerateBackupPoms=false
-      - name: Build and install with Maven 🔨
-        run: mvn clean deploy --batch-mode --update-snapshots -DreleaseSonatype=true -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} $MAVEN_ARGS
+      - name: Build and publish with Maven 🔨
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: mvn clean deploy --batch-mode --update-snapshots -DreleaseSonatype=true $MAVEN_ARGS
       - name: List signed files 🐞
         run: |
           echo "📦 Contents of target/:"
@@ -122,13 +124,6 @@ jobs:
           find target/ -type f -name "*.asc" -exec echo "✔ Found:" {} \;
           echo ""
           echo "❓ Missing POM signature?" && test ! -f target/*pom.asc && echo "❌ No POM signature found!" || echo "✅ POM is signed."      
-      - name: Publish to Maven Central
-        run: mvn central-publishing:publish $MAVEN_ARGS
-        env:
-          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          MAVEN_CENTRAL_TOKEN: ${{ secrets.SONATYPE_PASSWORD }}
-          MAVEN_GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - name: Upload build artifacts ⬆️
         uses: actions/upload-artifact@v4
         with:
