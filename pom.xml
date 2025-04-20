@@ -169,6 +169,7 @@
 						</execution>
 					</executions>
 					<configuration>
+						<attachPom>true</attachPom>
 						<gpgArguments>
 							<gpgArgument>--pinentry-mode</gpgArgument>
 							<gpgArgument>loopback</gpgArgument>
