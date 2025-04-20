@@ -51,6 +51,7 @@ jobs:
     name: Build and publish to Maven Central 🔨
     runs-on: [self-hosted, Linux, X64]
     env:
+      MAVEN_PROFILES: releaseSonatype
       MAVEN_ARGS: -Dmaven.test.skip=true
     outputs:
       pom_version: ${{ needs.bump.outputs.pom_version }}
@@ -75,7 +76,7 @@ jobs:
           server-id: maven
           server-username: ${{ secrets.SONATYPE_USERNAME }}
           server-password: ${{ secrets.SONATYPE_PASSWORD }}
-      - name: Set up GPG for CI ⚙️
+      - name: Set up GPG for CI 🔐
         run: |
           which gpg2 || sudo apt update && sudo apt install -y gnupg2
           mkdir -p ~/.gnupg
@@ -87,12 +88,9 @@ jobs:
           echo "max-cache-ttl 7200" >> ~/.gnupg/gpg-agent.conf
           gpgconf --kill gpg-agent
           gpgconf --launch gpg-agent
-      - name: Import GPG key using gpg2 🔐
-        run: |
           echo "${{ secrets.GPG_SECRET_KEY }}" | base64 --decode | gpg2 --batch --yes --import
           echo "${{ secrets.GPG_OWNERTRUST }}" | base64 --decode | gpg2 --import-ownertrust
           export GPG_TTY=$(tty)
-          export GPG_EXECUTABLE=gpg2
       - name: Write .m2/settings.xml 💾
         run: |
           mkdir -p ~/.m2
@@ -111,14 +109,14 @@ jobs:
           EOF
       - name: Conditionally setup Maven ⚙️
         run: |
-          wihch mvn || sudo apt update && sudo apt install -y maven
+          wihch mvn || (sudo apt update && sudo apt install -y maven)
       - name: Update pom.xml version 💾
         run: |
           mvn versions:set -DnewVersion=${{ needs.bump.outputs.major_version }}.${{ needs.bump.outputs.minor_version }}.${{ needs.bump.outputs.build_version }} -DgenerateBackupPoms=false
       - name: Build and publish with Maven 🔨
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        run: mvn clean deploy --batch-mode --update-snapshots -DreleaseSonatype=true $MAVEN_ARGS
+        run: mvn clean deploy --batch-mode --update-snapshots -P${{ env.MAVEN_PROFILES }} $MAVEN_ARGS
       - name: List signed files 🐞
         run: |
           echo "📦 Contents of target/:"
@@ -129,6 +127,7 @@ jobs:
           echo ""
           echo "❓ Missing POM signature?" && test ! -f target/*pom.asc && echo "❌ No POM signature found!" || echo "✅ POM is signed."      
       - name: Upload build artifacts ⬆️
+        if: ${{ always() && hashFiles('target/*.jar') != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: maven-artifacts
