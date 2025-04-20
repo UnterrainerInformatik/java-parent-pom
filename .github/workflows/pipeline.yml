@@ -77,6 +77,7 @@ jobs:
           server-password: ${{ secrets.SONATYPE_PASSWORD }}
       - name: Set up GPG for CI⚙️
         run: |
+          which gpg2 || sudo apt update && sudo apt install -y gnupg2
           mkdir -p ~/.gnupg
           chmod 700 ~/.gnupg
           echo "use-agent" >> ~/.gnupg/gpg.conf
