@@ -112,7 +112,7 @@ jobs:
         run: |
           mvn versions:set -DnewVersion=${{ needs.bump.outputs.major_version }}.${{ needs.bump.outputs.minor_version }}.${{ needs.bump.outputs.build_version }} -DgenerateBackupPoms=false
       - name: Build and install with Maven 🔨
-        run: mvn clean deploy --batch-mode --update-snapshots -DreleaseSonatype=true $MAVEN_ARGS
+        run: mvn clean deploy --batch-mode --update-snapshots -DreleaseSonatype=true -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} $MAVEN_ARGS
       - name: List signed files 🐞
         run: |
           echo "📦 Contents of target/:"
