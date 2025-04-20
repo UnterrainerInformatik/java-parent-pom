@@ -1,0 +1,100 @@
+name: PIPELINE
+
+on:
+  push:
+    branches:
+      - 'master'
+  workflow_dispatch:
+
+jobs:
+  bump:
+    name: Get And Bump SemVer 👊
+    runs-on: ubuntu-latest
+    outputs:
+      pom_version: ${{ steps.set_version.outputs.pom_version }}
+      major_version: ${{ steps.set_version.outputs.major_version }}
+      minor_version: ${{ steps.set_version.outputs.minor_version }}
+      build_version: ${{ steps.set_version.outputs.build_version }}
+    steps:
+      - name: Checkout repo 📦
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag 👊
+        uses: anothrNick/github-tag-action@master
+        id: bump_version
+        env:
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+          RELEASE_BRANCHES: master
+          DEFAULT_BUMP: patch
+          WITH_V: false
+      - name: Extract version from tag 🔍
+        id: set_version
+        env:
+          POM_VERSION: ${{ steps.bump_version.outputs.new_tag }}
+        run: |
+            MAJOR_VERSION=$(echo $POM_VERSION | cut -d. -f1)
+            MINOR_VERSION=$(echo $POM_VERSION | cut -d. -f2)
+            BUILD_VERSION=$(echo $POM_VERSION | cut -d. -f3)
+            echo POM:$POM_VERSION, MAJOR:$MAJOR_VERSION, MINOR:$MINOR_VERSION, BUILD:$BUILD_VERSION
+            echo --- set output for step ---
+            echo "pom_version=${POM_VERSION}" >> $GITHUB_ENV
+            echo "major_version=${MAJOR_VERSION}" >> $GITHUB_ENV
+            echo "minor_version=${MINOR_VERSION}" >> $GITHUB_ENV
+            echo "build_version=${BUILD_VERSION}" >> $GITHUB_ENV
+            echo --- set output for job ---
+            echo "pom_version=${POM_VERSION}" >> $GITHUB_OUTPUT
+            echo "major_version=${MAJOR_VERSION}" >> $GITHUB_OUTPUT
+            echo "minor_version=${MINOR_VERSION}" >> $GITHUB_OUTPUT
+            echo "build_version=${BUILD_VERSION}" >> $GITHUB_OUTPUT
+  build:
+    name: Build and publish to Maven Central 🔨
+    runs-on: ubuntu-latest
+    env:
+      MAVEN_ARGS: -Dmaven.test.skip=true
+    outputs:
+      pom_version: ${{ needs.bump.outputs.pom_version }}
+      major_version: ${{ needs.bump.outputs.major_version }}
+      minor_version: ${{ needs.bump.outputs.minor_version }}
+      build_version: ${{ needs.bump.outputs.build_version }}
+    needs: [bump]
+    steps:
+      - name: Checkout repo 📦
+        uses: actions/checkout@v4
+      - name: Cache Maven packages 💾
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+      - name: Set up JDK 21 ⚙️
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          server-id: maven
+          server-username: ${{ secrets.SONATYPE_USERNAME }}
+          server-password: ${{ secrets.SONATYPE_PASSWORD }}
+      - name: Import GPG key using gpg2 🔐
+        run: |
+          echo "${{ secrets.GPG_SECRET_KEY }}" | base64 --decode | gpg2 --batch --yes --import
+          echo "${{ secrets.GPG_OWNERTRUST }}" | base64 --decode | gpg2 --import-ownertrust
+          export GPG_TTY=$(tty)
+          export GPG_EXECUTABLE=gpg2
+      - name: Update pom.xml version 💾
+        run: |
+          mvn versions:set -DnewVersion=${{ needs.bump.outputs.major_version }}.${{ needs.bump.outputs.minor_version }}.${{ needs.bump.outputs.build_version }} -DgenerateBackupPoms=false
+      - name: Build and verify with Maven 🔨
+        run: mvn --batch-mode --update-snapshots verify $MAVEN_ARGS
+      - name: Publish to Maven Central
+        run: mvn deploy $MAVEN_ARGS
+        env:
+          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.SONATYPE_PASSWORD }}
+          MAVEN_GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Upload build artifacts ⬆️
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-artifacts
+          path: target/*.jar
