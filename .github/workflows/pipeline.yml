@@ -16,10 +16,6 @@ jobs:
       minor_version: ${{ steps.set_version.outputs.minor_version }}
       build_version: ${{ steps.set_version.outputs.build_version }}
     steps:
-      - name: Checkout repo 📦
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: '0'
       - name: Pre-fetch upload-artifact action (self-hosted only) ⚙️
         if: contains(runner.labels, 'self-hosted')
         run: |
@@ -28,9 +24,14 @@ jobs:
           if [ ! -d "upload-artifact" ]; then
             echo "Cloning upload-artifact@v4..."
             git clone --depth=1 --branch v4 https://github.com/actions/upload-artifact.git upload-artifact
+            echo "✅ upload-artifact@v4 cloned manually!"
           else
-            echo "upload-artifact already fetched."
+            echo "✅ upload-artifact already fetched."
           fi
+      - name: Checkout repo 📦
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
       - name: Bump version and push tag 👊
         uses: anothrNick/github-tag-action@master
         id: bump_version
@@ -71,8 +72,6 @@ jobs:
       build_version: ${{ needs.bump.outputs.build_version }}
     needs: [bump]
     steps:
-      - name: Checkout repo 📦
-        uses: actions/checkout@v4
       - name: Pre-fetch upload-artifact action (self-hosted only) ⚙️
         if: contains(runner.labels, 'self-hosted')
         run: |
@@ -81,9 +80,12 @@ jobs:
           if [ ! -d "upload-artifact" ]; then
             echo "Cloning upload-artifact@v4..."
             git clone --depth=1 --branch v4 https://github.com/actions/upload-artifact.git upload-artifact
+            echo "✅ upload-artifact@v4 cloned manually!"
           else
-            echo "upload-artifact already fetched."
+            echo "✅ upload-artifact already fetched."
           fi
+      - name: Checkout repo 📦
+        uses: actions/checkout@v4
       - name: Cache Maven packages 💾
         uses: actions/cache@v3
         with:
