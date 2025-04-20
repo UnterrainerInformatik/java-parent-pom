@@ -101,7 +101,7 @@ jobs:
         run: |
           mvn versions:set -DnewVersion=${{ needs.bump.outputs.major_version }}.${{ needs.bump.outputs.minor_version }}.${{ needs.bump.outputs.build_version }} -DgenerateBackupPoms=false
       - name: Build and verify with Maven 🔨
-        run: mvn --batch-mode --update-snapshots verify -Prelease $MAVEN_ARGS
+        run: mvn verify --batch-mode --update-snapshots -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} -DreleaseSonatype=true $MAVEN_ARGS
       - name: List signed files 🐞
         run: |
           echo "📦 Contents of target/:"
@@ -112,7 +112,7 @@ jobs:
           echo ""
           echo "❓ Missing POM signature?" && test ! -f target/*pom.asc && echo "❌ No POM signature found!" || echo "✅ POM is signed."      
       - name: Publish to Maven Central
-        run: mvn verify central-publishing:publish -Prelease -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} $MAVEN_ARGS
+        run: mvn central-publishing:publish -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} $MAVEN_ARGS
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.SONATYPE_PASSWORD }}
