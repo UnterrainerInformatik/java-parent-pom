@@ -20,6 +20,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: '0'
+      - name: Pre-fetch upload-artifact action (self-hosted only) ⚙️
+        if: contains(runner.labels, 'self-hosted')
+        run: |
+          mkdir -p ~/.setup-actions
+          cd ~/.setup-actions
+          if [ ! -d "upload-artifact" ]; then
+            echo "Cloning upload-artifact@v4..."
+            git clone --depth=1 --branch v4 https://github.com/actions/upload-artifact.git upload-artifact
+          else
+            echo "upload-artifact already fetched."
+          fi
       - name: Bump version and push tag 👊
         uses: anothrNick/github-tag-action@master
         id: bump_version
@@ -62,6 +73,17 @@ jobs:
     steps:
       - name: Checkout repo 📦
         uses: actions/checkout@v4
+      - name: Pre-fetch upload-artifact action (self-hosted only) ⚙️
+        if: contains(runner.labels, 'self-hosted')
+        run: |
+          mkdir -p ~/.setup-actions
+          cd ~/.setup-actions
+          if [ ! -d "upload-artifact" ]; then
+            echo "Cloning upload-artifact@v4..."
+            git clone --depth=1 --branch v4 https://github.com/actions/upload-artifact.git upload-artifact
+          else
+            echo "upload-artifact already fetched."
+          fi
       - name: Cache Maven packages 💾
         uses: actions/cache@v3
         with:
