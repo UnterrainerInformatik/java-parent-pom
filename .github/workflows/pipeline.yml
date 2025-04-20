@@ -75,6 +75,11 @@ jobs:
           server-id: maven
           server-username: ${{ secrets.SONATYPE_USERNAME }}
           server-password: ${{ secrets.SONATYPE_PASSWORD }}
+      - name: Set up GPG for CI
+        run: |
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
       - name: Import GPG key using gpg2 🔐
         run: |
           echo "${{ secrets.GPG_SECRET_KEY }}" | base64 --decode | gpg2 --batch --yes --import
