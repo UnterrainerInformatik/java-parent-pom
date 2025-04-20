@@ -8,68 +8,13 @@ on:
 
 jobs:
   bump:
-    name: Get And Bump SemVer 👊
-    runs-on: [self-hosted, Linux, X64]
-    outputs:
-      pom_version: ${{ steps.set_version.outputs.pom_version }}
-      major_version: ${{ steps.set_version.outputs.major_version }}
-      minor_version: ${{ steps.set_version.outputs.minor_version }}
-      build_version: ${{ steps.set_version.outputs.build_version }}
-    steps:
-      - name: Pre-fetch upload-artifact action (self-hosted only) ⚙️
-        if: contains(runner.labels, 'self-hosted')
-        run: |
-          mkdir -p ~/.setup-actions
-          cd ~/.setup-actions
-          if [ ! -d "upload-artifact" ]; then
-            echo "Cloning upload-artifact@v4..."
-            git clone --depth=1 --branch v4 https://github.com/actions/upload-artifact.git upload-artifact
-            echo "✅ upload-artifact@v4 cloned manually!"
-          else
-            echo "✅ upload-artifact already fetched."
-          fi
-      - name: Checkout repo 📦
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: '0'
-      - name: Bump version and push tag 👊
-        uses: anothrNick/github-tag-action@master
-        id: bump_version
-        env:
-          GITHUB_TOKEN: ${{ github.TOKEN }}
-          RELEASE_BRANCHES: master
-          DEFAULT_BUMP: patch
-          WITH_V: false
-      - name: Extract version from tag 🔍
-        id: set_version
-        env:
-          POM_VERSION: ${{ steps.bump_version.outputs.new_tag }}
-        run: |
-            MAJOR_VERSION=$(echo $POM_VERSION | cut -d. -f1)
-            MINOR_VERSION=$(echo $POM_VERSION | cut -d. -f2)
-            BUILD_VERSION=$(echo $POM_VERSION | cut -d. -f3)
-            echo POM:$POM_VERSION, MAJOR:$MAJOR_VERSION, MINOR:$MINOR_VERSION, BUILD:$BUILD_VERSION
-            echo --- set output for step ---
-            echo "pom_version=${POM_VERSION}" >> $GITHUB_ENV
-            echo "major_version=${MAJOR_VERSION}" >> $GITHUB_ENV
-            echo "minor_version=${MINOR_VERSION}" >> $GITHUB_ENV
-            echo "build_version=${BUILD_VERSION}" >> $GITHUB_ENV
-            echo --- set output for job ---
-            echo "pom_version=${POM_VERSION}" >> $GITHUB_OUTPUT
-            echo "major_version=${MAJOR_VERSION}" >> $GITHUB_OUTPUT
-            echo "minor_version=${MINOR_VERSION}" >> $GITHUB_OUTPUT
-            echo "build_version=${BUILD_VERSION}" >> $GITHUB_OUTPUT
+    uses: UnterrainerInformatik/bump-semver-workflow/.github/workflows/workflow.yml@master
   build:
     name: Build and publish to Maven Central 🔨
     runs-on: [self-hosted, Linux, X64]
     env:
       MAVEN_PROFILES: release-to-sonatype
       MAVEN_ARGS: -Dmaven.test.skip=true
-    outputs:
-      pom_version: ${{ needs.bump.outputs.pom_version }}
-      major_version: ${{ needs.bump.outputs.major_version }}
-      minor_version: ${{ needs.bump.outputs.minor_version }}
-      build_version: ${{ needs.bump.outputs.build_version }}
     needs: [bump]
     steps:
       - name: Pre-fetch upload-artifact action (self-hosted only) ⚙️
