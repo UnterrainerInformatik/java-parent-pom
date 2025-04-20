@@ -17,8 +17,6 @@ jobs:
       major_version: ${{ needs.bump.outputs.major_version }}
       minor_version: ${{ needs.bump.outputs.minor_version }}
       build_version: ${{ needs.bump.outputs.build_version }}
-      maven_profiles: release-to-sonatype
-      maven_args: -Dmaven.test.skip=true
     secrets:
       SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
       SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
