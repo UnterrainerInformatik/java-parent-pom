@@ -81,6 +81,22 @@ jobs:
           echo "${{ secrets.GPG_OWNERTRUST }}" | base64 --decode | gpg2 --import-ownertrust
           export GPG_TTY=$(tty)
           export GPG_EXECUTABLE=gpg2
+      - name: Write .m2/settings.xml 💾
+        run: |
+          mkdir -p ~/.m2
+          cat <<EOF > ~/.m2/settings.xml
+            <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+              <servers>
+                <server>
+                  <id>maven</id>
+                  <username>${{ secrets.SONATYPE_USERNAME }}</username>
+                  <password>${{ secrets.SONATYPE_PASSWORD }}</password>
+                </server>
+              </servers>
+            </settings>
+          EOF
       - name: Update pom.xml version 💾
         run: |
           mvn versions:set -DnewVersion=${{ needs.bump.outputs.major_version }}.${{ needs.bump.outputs.minor_version }}.${{ needs.bump.outputs.build_version }} -DgenerateBackupPoms=false
