@@ -51,7 +51,7 @@ jobs:
     name: Build and publish to Maven Central 🔨
     runs-on: [self-hosted, Linux, X64]
     env:
-      MAVEN_PROFILES: releaseSonatype
+      MAVEN_PROFILES: release-to-sonatype
       MAVEN_ARGS: -Dmaven.test.skip=true
     outputs:
       pom_version: ${{ needs.bump.outputs.pom_version }}
