@@ -16,9 +16,8 @@
 		<project.compile.sourceEncoding>UTF-8</project.compile.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<repos.id>ossrh</repos.id>
-		<repos.snapshot.url>https://s01.oss.sonatype.org/content/repositories/snapshots</repos.snapshot.url>
-		<repos.deployment.url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</repos.deployment.url>
+		<repos.id>maven</repos.id>
+		<repos.url>https://s01.oss.sonatype.org/repository/maven-releases/</repos.url>
 		<name>Parent-POM</name>
 		<package-path>info/unterrainer/commons/parentpom</package-path>
 		<packg-string>info.unterrainer.commons.parentpom</packg-string>
@@ -94,19 +93,17 @@
 	</dependencies>
 
 	<build>
-		<!-- <pluginManagement> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
-			<artifactId>maven-shade-plugin</artifactId> ... </plugin> </plugins> </pluginManagement> -->
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>org.sonatype.plugins</groupId>
-					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<groupId>org.sonatype.central</groupId>
+					<artifactId>central-publishing-maven-plugin</artifactId>
+					<version>0.7.0</version>
 					<extensions>true</extensions>
 					<configuration>
-						<serverId>ossrh</serverId>
-						<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-						<autoReleaseAfterClose>true</autoReleaseAfterClose>
-						<stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
+						<publishingServerId>${repos.id}</publishingServerId>
+						<autoPublish>true</autoPublish>
+						<waitUntil>published</waitUntil>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -172,6 +169,7 @@
 						</execution>
 					</executions>
 					<configuration>
+						<attachPom>true</attachPom>
 						<gpgArguments>
 							<gpgArgument>--pinentry-mode</gpgArgument>
 							<gpgArgument>loopback</gpgArgument>
@@ -353,13 +351,9 @@
 	</developers>
 
 	<distributionManagement>
-		<snapshotRepository>
-			<id>${repos.id}</id>
-			<url>${repos.snapshot.url}</url>
-		</snapshotRepository>
 		<repository>
 			<id>${repos.id}</id>
-			<url>${repos.deployment.url}</url>
+			<url>${repos.url}</url>
 		</repository>
 	</distributionManagement>
 
@@ -415,10 +409,6 @@
 						<artifactId>maven-source-plugin</artifactId>
 					</plugin>
 					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-					</plugin>
-					<plugin>
 						<artifactId>maven-compiler-plugin</artifactId>
 					</plugin>
 					<plugin>
@@ -426,6 +416,10 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-jar-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
 					</plugin>
 					<plugin>
 						<groupId>com.google.code.maven-replacer-plugin</groupId>
