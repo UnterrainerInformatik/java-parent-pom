@@ -368,6 +368,10 @@
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>replacer</artifactId>
+					</plugin>
+					<plugin>
 						<artifactId>maven-javadoc-plugin</artifactId>
 					</plugin>
 					<plugin>
@@ -382,10 +386,6 @@
 					<plugin>
 						<artifactId>maven-jar-plugin</artifactId>
 					</plugin>
-					<plugin>
-						<groupId>com.google.code.maven-replacer-plugin</groupId>
-						<artifactId>replacer</artifactId>
-					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -399,6 +399,10 @@
 			</activation>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>replacer</artifactId>
+					</plugin>
 					<plugin>
 						<artifactId>maven-gpg-plugin</artifactId>
 					</plugin>
@@ -420,10 +424,6 @@
 					<plugin>
 						<groupId>org.sonatype.central</groupId>
 						<artifactId>central-publishing-maven-plugin</artifactId>
-					</plugin>
-					<plugin>
-						<groupId>com.google.code.maven-replacer-plugin</groupId>
-						<artifactId>replacer</artifactId>
 					</plugin>
 				</plugins>
 			</build>
