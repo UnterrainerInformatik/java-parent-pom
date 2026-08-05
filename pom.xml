@@ -109,6 +109,10 @@
 						<publishingServerId>${repos.id}</publishingServerId>
 						<autoPublish>true</autoPublish>
 						<waitUntil>published</waitUntil>
+						<!-- Central processes deployments serially per namespace; when
+						     several libs release at once the default polling window is
+						     too short and the build goes red after a successful publish. -->
+						<waitMaxTime>3600</waitMaxTime>
 					</configuration>
 				</plugin>
 				<plugin>
